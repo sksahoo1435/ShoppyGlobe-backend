@@ -5,7 +5,7 @@ exports.addProduct = async (req, res) => {
     const { name, price, description, stockQuantity } = req.body;
 
     // Create a new product using the data from the request
-    const newProduct = new Products({
+    const newProduct = new Product({
       name,
       price,
       description,
