@@ -1,6 +1,11 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const { authenticateToken } = require('./middleWire/authMiddleware');
+const productRouter = require('./routers/productRoutes')
+const cartRouter = require('./routers/cartRoutes')
+const userRouter = require('./routers/userRoutes')
+
 
 dotenv.config();
 
@@ -14,6 +19,12 @@ app.use(express.json())
 app.get('/', (req, res) => {
     res.send('ShoppyGlobe started.');
 });
+
+// Routes
+app.use('/products', productRouter);
+app.use('/cart', authenticateToken, cartRouter); // Protect cart routes
+app.use('/', userRouter);
+
 
 mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
